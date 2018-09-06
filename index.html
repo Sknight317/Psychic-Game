@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Psychic Game</title>
+</head>
+<body>
+    <h1>The Psychic Game</h1>
+    <h2>Guess what letter I'm thinking of</h2>
+    <h2 id="wins-text">Wins:</h2>
+    <h2 id="losses-text">Losses:</h2>
+    <h2 id="guessesleft-text">Guesses Left:</h2>
+    <h2 id="GuessesSoFar-text">Your Guesses so far:</h2>
+    <script>
+
+        //Create variables for the number of wins, losses, guesses left, and guesses that the user guesses
+        var computerChoices = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o','p', 'q', 'r', 's', 't', 'w', 'x', 'y', 'z'];
+        var wins = 0;
+        var losses = 0;
+        var GuessesLeft = 9;
+        var GuessesSoFar = [];
+
+       
+        //Create a way to access these places in the html so we can manipulate the text.
+        var winsText = document.getElementById("wins-text");
+        var lossesText = document.getElementById("losses-text");
+        var GuessesLeftText = document.getElementById("guessesleft-text");
+        var GuessessoFar = document.getElementById("GuessesSoFar-text");
+       
+
+        //Function to reset the game.
+        function resetGame() {
+        computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+        GuessesSoFar = [];
+        GuessesLeft = 9;
+        }
+
+        //Run when the user presses a key.
+        document.onkeyup = function(event) {       
+        var userGuess = event.key;
+        console.log(userGuess);
+
+        
+        
+        //Have the computer randomly choose a letter from the computerchoices array. This is the psychic guess.
+        var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+
+        //Have wins increase by one if user guesses the letter the computer is thinking and reset the game.
+        if (userGuess === computerGuess) {
+          wins++;
+          resetGame();
+        }
+        
+        //If the user does not correctly guess the computer guess, have the number of guesses left decrease by one and 
+        //push the userGuess into the Guesses so far.
+        if (userGuess !== computerGuess) {
+            GuessesLeft--;
+            GuessesSoFar.push(userGuess);
+            GuessessoFar.textContent = "Your Guesses so far: " + GuessesSoFar;
+           
+        } 
+        //When guesses left is equal to zero, increase losses by one and reset the game. 
+        if (GuessesLeft === 0) {
+            losses++;
+            resetGame();
+        }
+       
+
+       //Display for the number of wins, losses, guesses left, and the user's guesses so far
+        GuessesLeftText.textContent = "Guesses Left: " + GuessesLeft;
+        winsText.textContent = "Wins: " + wins;
+        lossesText.textContent = "Losses: " + losses;
+        
+       
+        
+      }
+
+    </script>
+    
+</body>
+</html>
